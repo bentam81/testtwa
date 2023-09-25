@@ -10,12 +10,29 @@ import {
   Button,
 } from "./styled/styled";
 
-import { Telegram, WebAppUser } from "@twa-dev/types"
+import { Telegram } from "@twa-dev/types"
 declare global {
   interface Window {
     Telegram: Telegram;
-    WebAppUser: WebAppUser;
   }
+}
+
+function getTgUsername() {
+  let ret = ""
+  const ds = window.Telegram.WebApp.initData.split("&")
+  for (let i = 0; i < ds.length; i++) {
+    if (ds[i].startsWith("user=")) {
+      try {
+        let userJson = decodeURIComponent(ds[i].substring(5))
+        let j = JSON.parse(userJson);
+        ret = j["username"]
+      } catch (e) {
+        ret = ""
+      }
+      break;
+    }
+  }
+  return ret
 }
 
 export function Counter() {
@@ -46,13 +63,8 @@ export function Counter() {
           >
             Increment
           </Button>
-          @twa-dev/types<br />
           Telegram.WebApp.version: {window.Telegram.WebApp.version}<br />
-          WebAppUser.id: {window.WebAppUser?.id}<br />
-          WebAppUser.first_name: {window.WebAppUser?.first_name}<br />
-          WebAppUser.last_name: {window.WebAppUser?.last_name}<br />
-          WebAppUser.username: {window.WebAppUser?.username}<br />
-          WebAppUser.language_code: {window.WebAppUser?.language_code}<br />
+          TG username: {getTgUsername()}<br />
         </FlexBoxCol>
       </Card>
     </div>
