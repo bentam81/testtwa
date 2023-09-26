@@ -1,6 +1,7 @@
 import { TonConnectButton } from "@tonconnect/ui-react";
 import { useCounterContract } from "../hooks/useCounterContract";
 import { useTonConnect } from "../hooks/useTonConnect";
+import { useState } from "react";
 
 import {
   Card,
@@ -8,6 +9,7 @@ import {
   FlexBoxRow,
   Ellipsis,
   Button,
+  Input
 } from "./styled/styled";
 
 import { Telegram } from "@twa-dev/types"
@@ -36,6 +38,9 @@ function getTgUsername() {
 }
 
 export function Counter() {
+  const [delta, setDelta] = useState("1");
+  const [errStr, setErrStr] = useState("");
+
   const { connected } = useTonConnect();
   const { value, address, sendIncrement } = useCounterContract();
 
@@ -46,6 +51,15 @@ export function Counter() {
       <Card>
         <FlexBoxCol>
           <h3>Counter</h3>
+          <FlexBoxRow>
+            <label>Delta </label>
+            <Input
+              style={{ marginRight: 8 }}
+              type="number"
+              value={delta}
+              onChange={(e) => setDelta(e.target.value)}
+            ></Input>
+          </FlexBoxRow>
           <FlexBoxRow>
             <b>Address</b>
             <Ellipsis>{address}</Ellipsis>
@@ -58,13 +72,19 @@ export function Counter() {
             disabled={!connected}
             className={`Button ${connected ? "Active" : "Disabled"}`}
             onClick={() => {
-              sendIncrement();
+              try {
+                sendIncrement(Number(delta));
+                setErrStr("done")
+              } catch (e: any) {
+                setErrStr(e.toString())
+              }
             }}
           >
             Increment
           </Button>
           Telegram.WebApp.version: {window.Telegram.WebApp.version}<br />
           TG username: {getTgUsername()}<br />
+          {errStr}<br />
         </FlexBoxCol>
       </Card>
     </div>

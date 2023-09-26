@@ -21,7 +21,7 @@ export function useCounterContract() {
 
         network === CHAIN.MAINNET
           ? "EQBPEDbGdwaLv1DKntg9r6SjFIVplSaSJoJ-TVLe_2rqBOmH"
-          : "EQBW_pAglURVb7gUZO4BqYAS13Srkzzq4UJMIe774-R46wFU"
+          : "EQByzRoSOd2p9A4fgU9Yx6Bo46hfmQBZxB4PYB03QEWMK-d3"
       ) // replace with your address from tutorial 2 step 8
     );
     return client.open(contract) as OpenedContract<Counter>;
@@ -39,8 +39,8 @@ export function useCounterContract() {
   return {
     value: isFetching ? null : data,
     address: counterContract?.address.toString(),
-    sendIncrement: () => {
-      return counterContract?.sendIncrement(sender);
+    sendIncrement: (delta: number) => {
+      return counterContract?.sendIncrement(sender, delta);
     },
   };
 }
