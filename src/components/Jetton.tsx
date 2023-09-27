@@ -16,7 +16,7 @@ export function Jetton() {
   return (
     <Card title="Jetton">
       <FlexBoxCol>
-        <h3>Faucet Jetton</h3>
+        <h3>Faucet to mint Jetton</h3>
         <FlexBoxRow>
           Wallet
           <Ellipsis>{jettonWalletAddress}</Ellipsis>

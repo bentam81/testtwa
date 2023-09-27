@@ -7,6 +7,8 @@ import { Address, OpenedContract } from "ton-core";
 import { useQuery } from "@tanstack/react-query";
 import { CHAIN } from "@tonconnect/protocol";
 
+const testSmartContractAddress: string = "EQByzRoSOd2p9A4fgU9Yx6Bo46hfmQBZxB4PYB03QEWMK-d3"
+
 export function useCounterContract() {
   const { client } = useTonClient();
   const { sender, network } = useTonConnect();
@@ -21,7 +23,7 @@ export function useCounterContract() {
 
         network === CHAIN.MAINNET
           ? "EQBPEDbGdwaLv1DKntg9r6SjFIVplSaSJoJ-TVLe_2rqBOmH"
-          : "EQByzRoSOd2p9A4fgU9Yx6Bo46hfmQBZxB4PYB03QEWMK-d3"
+          : testSmartContractAddress
       ) // replace with your address from tutorial 2 step 8
     );
     return client.open(contract) as OpenedContract<Counter>;

@@ -12,15 +12,18 @@ export function useTonClient() {
     client: useAsyncInitialize(async () => {
       if (!network) return;
 
+      // Orbs Network
       return new TonClient({
         endpoint: await getHttpEndpoint({
           network: network === CHAIN.MAINNET ? "mainnet" : "testnet",
         }),
       });
 
+      // toncenter API
       // const endpoint = network === CHAIN.MAINNET ? "https://toncenter.com/api/v2/jsonRPC" : "https://testnet.toncenter.com/api/v2/jsonRPC"
-      // return new TonClient({ endpoint });
+      // const apiKey = "<API Key>"
       // return new TonClient({ endpoint, apiKey });
+
     }, [network]),
   };
 }
