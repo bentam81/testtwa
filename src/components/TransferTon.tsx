@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Address, toNano } from "ton";
 import { useTonConnect } from "../hooks/useTonConnect";
-import { Card, FlexBoxCol, FlexBoxRow, Button, Input } from "./styled/styled";
+import { DimCard, FlexBoxCol, FlexBoxRow, DimButton, Input } from "./styled/styled";
 
 export function TransferTon() {
   const { sender, connected } = useTonConnect();
@@ -13,9 +13,9 @@ export function TransferTon() {
   );
 
   return (
-    <Card>
+    <DimCard>
       <FlexBoxCol>
-        <h3>Transfer TON</h3>
+        <b>Transfer TON coin</b>
         <FlexBoxRow>
           <label>Amount </label>
           <Input
@@ -33,7 +33,7 @@ export function TransferTon() {
             onChange={(e) => setTonRecipient(e.target.value)}
           ></Input>
         </FlexBoxRow>
-        <Button
+        <DimButton
           disabled={!connected}
           style={{ marginTop: 18 }}
           onClick={async () => {
@@ -44,8 +44,8 @@ export function TransferTon() {
           }}
         >
           Transfer
-        </Button>
+        </DimButton>
       </FlexBoxCol>
-    </Card>
+    </DimCard>
   );
 }

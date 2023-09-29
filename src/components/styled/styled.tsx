@@ -10,6 +10,16 @@ export const Card = styled.div`
   }
 `;
 
+export const DimCard = styled.div`
+  padding: 18px 20px;
+  border-radius: 8px;
+  background-color: #C0C0C0;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: #111;
+  }
+`;
+
 export const FlexBoxRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -26,6 +36,18 @@ export const FlexBoxCol = styled.div`
 export const Button = styled.button`
   background-color: ${(props) =>
     props.disabled ? "#6e6e6e" : "var(--tg-theme-button-color)"};
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: var(--tg-theme-button-text-color);
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: ${(props) => (props.disabled ? "none" : "inherit")};
+`;
+
+export const DimButton = styled.button`
+  background-color: ${(props) =>
+    props.disabled ? "#6e6e6e" : "#A0A0A0"};
   border: 0;
   border-radius: 8px;
   padding: 10px 20px;

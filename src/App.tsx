@@ -3,6 +3,7 @@ import { TonConnectButton } from "@tonconnect/ui-react";
 import { Counter } from "./components/Counter";
 import { Jetton } from "./components/Jetton";
 import { TransferTon } from "./components/TransferTon";
+import { TransferJetton } from "./components/TransferJetton";
 import styled from "styled-components";
 import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
@@ -44,6 +45,7 @@ function App() {
             </Button>
           </FlexBoxRow>
           <Counter />
+          <TransferJetton />
           <TransferTon />
           <Jetton />
         </FlexBoxCol>

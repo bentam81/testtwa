@@ -1,34 +1,35 @@
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
-import FaucetJetton from "../contracts/faucetJetton";
+import Jetton from "../contracts/jetton";
 import { Address, OpenedContract } from "ton-core";
 import FaucetJettonWallet from "../contracts/faucetJettonWallet";
 import { useQuery } from "@tanstack/react-query";
 
-const JettonAddr: string = "EQB8StgTQXidy32a8xfu7j4HMoWYV0b0cFM8nXsP2cza_b7Y" // replace with your address from tutorial 2 step 8
+const RecipientAddr: string = "kQCBo8IEWCpNfGmmnaZOw12iv0Eei6RpXpjKMhCm91nL8-9-" //???
+const JettonAddr: string = "EQB8StgTQXidy32a8xfu7j4HMoWYV0b0cFM8nXsP2cza_b7Y" //???
 
-export function useFaucetJettonContract() {
+export function useJettonContract() {
   const { wallet, sender } = useTonConnect();
   const { client } = useTonClient();
 
-  const faucetJettonContract = useAsyncInitialize(async () => {
+  const jettonContract = useAsyncInitialize(async () => {
     if (!client || !wallet) return;
-    const contract = new FaucetJetton(
+    const contract = new Jetton(
       Address.parse(JettonAddr)
     );
-    return client.open(contract) as OpenedContract<FaucetJetton>;
+    return client.open(contract) as OpenedContract<Jetton>;
   }, [client, wallet]);
 
   const jwContract = useAsyncInitialize(async () => {
-    if (!faucetJettonContract || !client) return;
-    const jettonWalletAddress = await faucetJettonContract!.getWalletAddress(
+    if (!jettonContract || !client) return;
+    const jettonWalletAddress = await jettonContract!.getWalletAddress(
       Address.parse(wallet!)
     );
     return client!.open(
       new FaucetJettonWallet(Address.parse(jettonWalletAddress))
     ) as OpenedContract<FaucetJettonWallet>;
-  }, [faucetJettonContract, client]);
+  }, [jettonContract, client]);
 
   const { data, isFetching } = useQuery(
     ["jetton"],
@@ -41,9 +42,8 @@ export function useFaucetJettonContract() {
   );
 
   return {
-    mint: () => {
-      faucetJettonContract?.sendMintFromFaucet(sender, Address.parse(wallet!));
-    },
+    wallet,
+    recipientAddr: RecipientAddr,
     jettonAddr: JettonAddr,
     jettonWalletAddress: jwContract?.address.toString(),
     balance: isFetching ? null : data,

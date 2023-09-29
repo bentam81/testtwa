@@ -50,11 +50,7 @@ export function Counter() {
 
       <Card>
         <FlexBoxCol>
-          <h3>Custom Smart Contract: Counter</h3>
-          <FlexBoxRow>
-            <b>Address</b>
-            <Ellipsis>{address}</Ellipsis>
-          </FlexBoxRow>
+          <h3>Simple Custom Smart Contract: Counter</h3>
           <FlexBoxRow>
             <b>Value</b>
             <div>{value ?? "Loading..."}</div>
@@ -73,6 +69,7 @@ export function Counter() {
             className={`Button ${connected ? "Active" : "Disabled"}`}
             onClick={() => {
               try {
+                setErrStr("")
                 sendIncrement(Number(delta));
                 setErrStr("done")
               } catch (e: any) {
@@ -82,6 +79,7 @@ export function Counter() {
           >
             Increment
           </Button>
+          Counter: {address}<br />
           {/* Telegram.WebApp.version: {window.Telegram.WebApp.version}<br /> */}
           TG username: {getTgUsername()}<br />
           {errStr}<br />
