@@ -4,11 +4,11 @@ import { useTonConnect } from "../hooks/useTonConnect";
 import { useState } from "react";
 
 import {
-  Card,
+  DimCard,
   FlexBoxCol,
   FlexBoxRow,
   Ellipsis,
-  Button,
+  DimButton,
   Input
 } from "./styled/styled";
 
@@ -48,7 +48,7 @@ export function Counter() {
     <div className="Container">
       <TonConnectButton />
 
-      <Card>
+      <DimCard>
         <FlexBoxCol>
           <h3>Simple Custom Smart Contract: Counter</h3>
           <FlexBoxRow>
@@ -64,7 +64,7 @@ export function Counter() {
               onChange={(e) => setDelta(e.target.value)}
             ></Input>
           </FlexBoxRow>
-          <Button
+          <DimButton
             disabled={!connected}
             className={`Button ${connected ? "Active" : "Disabled"}`}
             onClick={() => {
@@ -78,13 +78,13 @@ export function Counter() {
             }}
           >
             Increment
-          </Button>
+          </DimButton>
           Counter: {address}<br />
           {/* Telegram.WebApp.version: {window.Telegram.WebApp.version}<br /> */}
           TG username: {getTgUsername()}<br />
           {errStr}<br />
         </FlexBoxCol>
-      </Card>
+      </DimCard>
     </div>
   );
 }

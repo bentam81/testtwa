@@ -73,3 +73,7 @@ export const Input = styled("input")`
     border: 1px solid #fefefe;
   }
 `;
+
+export const RefTable = styled.table`
+  font-size : 8px! important; 
+`

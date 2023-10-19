@@ -2,6 +2,7 @@ import "./App.css";
 import { TonConnectButton } from "@tonconnect/ui-react";
 import { Counter } from "./components/Counter";
 import { Jetton } from "./components/Jetton";
+import { BWsettle } from "./components/BWsettle";
 import { TransferTon } from "./components/TransferTon";
 import { TransferJetton } from "./components/TransferJetton";
 import styled from "styled-components";
@@ -44,6 +45,7 @@ function App() {
                 : "N/A"}
             </Button>
           </FlexBoxRow>
+          <BWsettle />
           <Counter />
           <TransferJetton />
           <TransferTon />
