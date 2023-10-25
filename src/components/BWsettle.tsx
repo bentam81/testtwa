@@ -10,10 +10,10 @@ function tonViewerTestnetUrl(addr: string) {
 }
 
 export function BWsettle() {
-  const { sender, connected } = useTonConnect();
+  const { wallet, sender, connected } = useTonConnect();
   const [amount, setAmount] = useState("1");
   const [errStr, setErrStr] = useState("");
-  const { wallet, bwAddr, jettonAddr,
+  const { userJettonWallet, bwAddr, jettonAddr,
     userJettonWalletAddress, bwJettonWalletAddress, bwUserJettonAccountAddress,
     userJettonBalance, bwJettonBalance, bwUserJettonBalance } = useBwContract();
 
@@ -44,25 +44,7 @@ export function BWsettle() {
           onClick={async () => {
             try {
               setErrStr("")
-              const JettonDecimal = 1e9 //???
-              const amountInt = BigInt(Number(amount) * JettonDecimal)
-
-              const transferBody = beginCell()
-                .storeUint(0xf8a7ea5, 32)      // jetton transfer op code
-                .storeUint(0, 64)              // query_id:uint64
-                .storeCoins(amountInt)         // amount:(VarUInteger 16) -  Jetton amount for transfer (decimals = 6 - jUSDT, 9 - default)
-                .storeAddress(Address.parse(bwAddr))    // destination:MsgAddress
-                .storeAddress(Address.parse(wallet!))          // response_destination:MsgAddress
-                .storeUint(0, 1)               // custom_payload:(Maybe ^Cell)
-                .storeCoins(toNano("0.05"))    // forward_ton_amount:(VarUInteger 16)
-                .storeUint(0, 1)               // forward_payload:(Either Cell ^Cell)
-                .endCell();
-
-              sender.send({
-                to: Address.parse(userJettonWalletAddress!),
-                value: toNano("0.1"),
-                body: transferBody
-              });
+              await userJettonWallet?.sendBWdeposit(sender, toNano(amount), Address.parse(bwAddr), Address.parse(wallet!))
               setErrStr("done")
             } catch (e: any) {
               setErrStr(e.toString())

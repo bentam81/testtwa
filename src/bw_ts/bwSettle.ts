@@ -53,9 +53,9 @@ export default class BWsettle implements Contract {
         return res.stack.readAddress()
     }
 
-    async sendLock(provider: ContractProvider, via: Sender, gas = 0.01) {
+    async sendAdminDisableDeposit(provider: ContractProvider, via: Sender, gas = 0.01) {
         const messageBody = beginCell()
-            .storeUint(0x878f9b0e, 32) // op
+            .storeUint(0xe4252305, 32) // op
             .storeUint(0, 64) // query id
             .endCell();
         await provider.internal(via, {
@@ -64,9 +64,9 @@ export default class BWsettle implements Contract {
         });
     }
 
-    async sendUnlock(provider: ContractProvider, via: Sender, gas = 0.01) {
+    async sendAdminEnableDeposit(provider: ContractProvider, via: Sender, gas = 0.01) {
         const messageBody = beginCell()
-            .storeUint(0x6ae4b0ef, 32) // op
+            .storeUint(0x1c09f4ef, 32) // op
             .storeUint(0, 64) // query id
             .endCell();
         await provider.internal(via, {
@@ -86,4 +86,17 @@ export default class BWsettle implements Contract {
         });
     }
 
+    async sendUserWithdrawal(provider: ContractProvider, via: Sender, amount: bigint, platformJettonAccount: Address, user_addr: Address, gas = 0.1) {
+        const messageBody = beginCell()
+            .storeUint(0xca4afda9, 32) // op
+            .storeUint(0, 64) // query id
+            .storeCoins(amount)
+            .storeAddress(user_addr)
+            .storeAddress(platformJettonAccount)
+            .endCell();
+        await provider.internal(via, {
+            value: gas.toString(),
+            body: messageBody
+        });
+    }
 }

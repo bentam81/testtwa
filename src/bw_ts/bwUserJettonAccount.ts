@@ -2,11 +2,11 @@ import { Contract, ContractProvider, Sender, Address, Cell, contractAddress, beg
 
 export default class BWuserJettonAccount implements Contract {
 
-    static createForDeploy(code: Cell, platformAddress: Address, userAddress: Address, jettonAddress: Address): BWuserJettonAccount {
+    static createForDeploy(code: Cell, platformAddress: Address, userAddress: Address, platformJettonAddress: Address): BWuserJettonAccount {
         const data = beginCell()
             .storeAddress(platformAddress)
             .storeAddress(userAddress)
-            .storeAddress(jettonAddress)
+            .storeAddress(platformJettonAddress)
             .storeCoins(toNano(0))
             .endCell();
         const workchain = 0; // deploy to workchain 0

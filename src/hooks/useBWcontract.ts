@@ -3,9 +3,9 @@ import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
 import Jetton from "../contracts/jetton";
 import { Address, OpenedContract, fromNano } from "ton-core";
-import FaucetJettonWallet from "../contracts/faucetJettonWallet";
-import BWsettle from "../contracts/bwSettle";
-import BWuserJettonAccount from "../contracts/bwUserJettonAccount";
+import { JettonWallet } from "../bw_ts/jettonWallet";
+import BWsettle from "../bw_ts/bwSettle";
+import BWuserJettonAccount from "../bw_ts/bwUserJettonAccount";
 import { useQueries } from "@tanstack/react-query";
 
 const BwAddr: string = "EQCKCj7xFLn4LVx_ugt-sznvPOr6pyDe_LKebNR1Kj8C7WwT"
@@ -23,13 +23,13 @@ export function useBwContract() {
     if (!jettonMinterContract) return;
     const userJettonWalletAddress = await jettonMinterContract!.getWalletAddress(Address.parse(wallet!));
     const userJettonWalletContract = client!.open(
-      new FaucetJettonWallet(Address.parse(userJettonWalletAddress))
-    ) as OpenedContract<FaucetJettonWallet>;
+      new JettonWallet(Address.parse(userJettonWalletAddress))
+    ) as OpenedContract<JettonWallet>;
 
     const bwJettonWalletAddress = await jettonMinterContract!.getWalletAddress(Address.parse(BwAddr!));
     const bwJettonWalletContract = client!.open(
-      new FaucetJettonWallet(Address.parse(bwJettonWalletAddress))
-    ) as OpenedContract<FaucetJettonWallet>;
+      new JettonWallet(Address.parse(bwJettonWalletAddress))
+    ) as OpenedContract<JettonWallet>;
 
     const contract2 = new BWsettle(Address.parse(BwAddr));
     const bwSettleContract = client.open(contract2) as OpenedContract<BWsettle>;
@@ -44,8 +44,8 @@ export function useBwContract() {
     return [userJettonWalletContract, bwJettonWalletContract, bwUserJettonAccountContract]
   }, [client, wallet]);
 
-  const userJettonWalletContract = contracts?.at(0) as OpenedContract<FaucetJettonWallet> | undefined
-  const bwJettonWalletContract = contracts?.at(1) as OpenedContract<FaucetJettonWallet> | undefined
+  const userJettonWalletContract = contracts?.at(0) as OpenedContract<JettonWallet> | undefined
+  const bwJettonWalletContract = contracts?.at(1) as OpenedContract<JettonWallet> | undefined
   const bwUserJettonAccountContract = contracts?.at(2) as OpenedContract<BWuserJettonAccount> | undefined
 
   const [userJettonQuery, bwJettonQuery, bwUserJettonQuery] = useQueries({
@@ -53,14 +53,14 @@ export function useBwContract() {
       {
         queryKey: ['userJetton'],
         queryFn: async () => {
-          return userJettonWalletContract ? (await userJettonWalletContract.getBalance()).toString() : "-"
+          return userJettonWalletContract ? fromNano(await userJettonWalletContract.getJettonBalance()) : "-"
         },
         refetchInterval: 3000
       },
       {
         queryKey: ['bwJetton'],
         queryFn: async () => {
-          return bwJettonWalletContract ? (await bwJettonWalletContract.getBalance()).toString() : "-"
+          return bwJettonWalletContract ? fromNano(await bwJettonWalletContract.getJettonBalance()) : "-"
         },
         refetchInterval: 3000
       },
@@ -76,7 +76,7 @@ export function useBwContract() {
 
 
   return {
-    wallet,
+    userJettonWallet: userJettonWalletContract,
     bwAddr: BwAddr,
     jettonAddr: JettonAddr,
     userJettonWalletAddress: userJettonWalletContract?.address.toString(),
