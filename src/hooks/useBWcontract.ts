@@ -8,7 +8,7 @@ import BWsettle from "../bw_ts/bwSettle";
 import BWuserJettonAccount from "../bw_ts/bwUserJettonAccount";
 import { useQueries } from "@tanstack/react-query";
 
-const BwAddr: string = "EQCKCj7xFLn4LVx_ugt-sznvPOr6pyDe_LKebNR1Kj8C7WwT"
+const BwAddr: string = "EQATnybeZrqgk-oOJVKIFsKJ-gazr_T548rR-9R_mqhFcHq2"
 const JettonAddr: string = "EQB8StgTQXidy32a8xfu7j4HMoWYV0b0cFM8nXsP2cza_b7Y" //???
 
 export function useBwContract() {
@@ -41,12 +41,13 @@ export function useBwContract() {
     const bwUserJettonAccountContract = client!.open(
       new BWuserJettonAccount(bwUserJettonAccountAddress)) as OpenedContract<BWuserJettonAccount>;
 
-    return [userJettonWalletContract, bwJettonWalletContract, bwUserJettonAccountContract]
+    return [userJettonWalletContract, bwJettonWalletContract, bwSettleContract, bwUserJettonAccountContract]
   }, [client, wallet]);
 
   const userJettonWalletContract = contracts?.at(0) as OpenedContract<JettonWallet> | undefined
   const bwJettonWalletContract = contracts?.at(1) as OpenedContract<JettonWallet> | undefined
-  const bwUserJettonAccountContract = contracts?.at(2) as OpenedContract<BWuserJettonAccount> | undefined
+  const bwSettleContract = contracts?.at(2) as OpenedContract<BWsettle> | undefined
+  const bwUserJettonAccountContract = contracts?.at(3) as OpenedContract<BWuserJettonAccount> | undefined
 
   const [userJettonQuery, bwJettonQuery, bwUserJettonQuery] = useQueries({
     queries: [
@@ -77,6 +78,7 @@ export function useBwContract() {
 
   return {
     userJettonWallet: userJettonWalletContract,
+    bwSettleContract: bwSettleContract,
     bwAddr: BwAddr,
     jettonAddr: JettonAddr,
     userJettonWalletAddress: userJettonWalletContract?.address.toString(),

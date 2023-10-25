@@ -13,7 +13,7 @@ export function BWsettle() {
   const { wallet, sender, connected } = useTonConnect();
   const [amount, setAmount] = useState("1");
   const [errStr, setErrStr] = useState("");
-  const { userJettonWallet, bwAddr, jettonAddr,
+  const { userJettonWallet, bwSettleContract, bwAddr, jettonAddr,
     userJettonWalletAddress, bwJettonWalletAddress, bwUserJettonAccountAddress,
     userJettonBalance, bwJettonBalance, bwUserJettonBalance } = useBwContract();
 
@@ -30,7 +30,7 @@ export function BWsettle() {
           </table>
         </FlexBoxRow>
         <FlexBoxRow>
-          <label>Deposit Amount </label>
+          <label>Amount</label>
           <Input
             style={{ marginRight: 8 }}
             type="number"
@@ -42,16 +42,23 @@ export function BWsettle() {
           disabled={!connected}
           style={{ marginTop: 18 }}
           onClick={async () => {
-            try {
-              setErrStr("")
-              await userJettonWallet?.sendBWdeposit(sender, toNano(amount), Address.parse(bwAddr), Address.parse(wallet!))
-              setErrStr("done")
-            } catch (e: any) {
-              setErrStr(e.toString())
-            }
+            setErrStr("")
+            userJettonWallet?.sendBWdeposit(sender, toNano(amount), Address.parse(bwAddr), Address.parse(wallet!))
+            setErrStr("done")
           }}
         >
           Deposit
+        </Button>
+        <Button
+          disabled={!connected}
+          style={{ marginTop: 18 }}
+          onClick={async () => {
+            setErrStr("")
+            bwSettleContract?.sendUserWithdrawal(sender, toNano(amount), Address.parse(bwJettonWalletAddress!), Address.parse(wallet!))
+            setErrStr("done")
+          }}
+        >
+          Withdrawal
         </Button>
         <FlexBoxRow>
           <RefTable>
