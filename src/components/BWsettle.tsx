@@ -5,7 +5,7 @@ import { useTonConnect } from "../hooks/useTonConnect";
 import { useBwContract } from "../hooks/useBWcontract";
 import { Card, FlexBoxCol, FlexBoxRow, Button, Input, RefTable } from "./styled/styled";
 
-function tonViewerTestnetUrl(addr: string) {
+function tonViewerTestnetUrl(addr = "") {
   return "https://testnet.tonviewer.com/" + addr;
 }
 
@@ -32,7 +32,7 @@ export function BWsettle() {
         <FlexBoxRow>
           <label>Amount</label>
           <Input
-            style={{ marginRight: 8 }}
+            style={{ marginRight: 4 }}
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -40,22 +40,18 @@ export function BWsettle() {
         </FlexBoxRow>
         <Button
           disabled={!connected}
-          style={{ marginTop: 18 }}
+          style={{ marginTop: 4 }}
           onClick={async () => {
-            setErrStr("")
             userJettonWallet?.sendBWdeposit(sender, toNano(amount), Address.parse(bwAddr), Address.parse(wallet!))
-            setErrStr("done")
           }}
         >
           Deposit
         </Button>
         <Button
           disabled={!connected}
-          style={{ marginTop: 18 }}
+          style={{ marginTop: 4 }}
           onClick={async () => {
-            setErrStr("")
             bwSettleContract?.sendUserWithdrawal(sender, toNano(amount), Address.parse(bwJettonWalletAddress!), Address.parse(wallet!))
-            setErrStr("done")
           }}
         >
           Withdrawal
@@ -63,6 +59,8 @@ export function BWsettle() {
         <FlexBoxRow>
           <RefTable>
             <table>
+              <tr><td></td><td>View On-chain data in <a href={tonViewerTestnetUrl()}>{tonViewerTestnetUrl()}</a></td></tr>
+              <tr><td><b>User:</b></td><td><a href={tonViewerTestnetUrl(wallet ? wallet.toString() : "")} target="_blank">{wallet ? wallet.toString() : ""}</a></td></tr>
               <tr><td><b>BusyWhale:</b></td><td><a href={tonViewerTestnetUrl(bwAddr)} target="_blank">{bwAddr}</a></td></tr>
               <tr><td><b>JET1 (Minter):</b></td><td><a href={tonViewerTestnetUrl(jettonAddr)} target="_blank">{jettonAddr}</a></td></tr>
               <tr><td><b>JET1 (User Wallet):</b></td><td><a href={tonViewerTestnetUrl(userJettonWalletAddress!)} target="_blank">{userJettonWalletAddress}</a></td></tr>
