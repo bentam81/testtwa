@@ -41,8 +41,8 @@
 # Run
 * `npm run dev`
 * my local instance:
-  * `@ben_test_ton_bot`
-  * https://t.me/ben_test_ton_bot
+  * `@busywhale_ton_dev_bot`
+  * https://t.me/busywhale_ton_dev_bot
 
 # Wallet Integration
 * @tonconnect/ui-react@2.0.0-beta.2 is needed for the latest Telegram Wallet and TON Space updates
