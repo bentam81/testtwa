@@ -6,8 +6,12 @@ import {
   FlexBoxCol,
   FlexBoxRow,
   DimButton,
-  Ellipsis,
+  RefTable,
 } from "./styled/styled";
+
+function tonViewerTestnetUrl(addr = "") {
+  return "https://testnet.tonviewer.com/" + addr;
+}
 
 export function Jetton() {
   const { connected } = useTonConnect();
@@ -18,12 +22,17 @@ export function Jetton() {
       <FlexBoxCol>
         <b>Faucet to mint JET1 coin</b>
         <FlexBoxRow>
-          JET1: {jettonAddr}<br />
-          user JET1 Wallet: {jettonWalletAddress}
+          <table>
+            <tr><td><b>User Balance:</b></td><td>{balance ?? ""}</td></tr>
+          </table>
         </FlexBoxRow>
         <FlexBoxRow>
-          Balance
-          <div>{balance ?? "Loading..."}</div>
+          <RefTable>
+            <table>
+              <tr><td><b>JET1 (Minter):</b></td><td><a href={tonViewerTestnetUrl(jettonAddr)} target="_blank">{jettonAddr}</a></td></tr>
+              <tr><td><b>JET1 (User Wallet):</b></td><td><a href={tonViewerTestnetUrl(jettonWalletAddress!)} target="_blank">{jettonWalletAddress}</a></td></tr>
+            </table>
+          </RefTable>
         </FlexBoxRow>
         <DimButton
           disabled={!connected}
