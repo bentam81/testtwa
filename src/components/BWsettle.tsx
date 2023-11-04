@@ -4,6 +4,7 @@ import { Address, toNano, beginCell } from "ton";
 import { useTonConnect } from "../hooks/useTonConnect";
 import { useBwContract } from "../hooks/useBWcontract";
 import { Card, FlexBoxCol, FlexBoxRow, Button, Input, RefTable } from "./styled/styled";
+import BWlogoDev from "../svg/LogoDark_DEV.svg"
 
 function tonViewerTestnetUrl(addr = "") {
   return "https://testnet.tonviewer.com/" + addr;
@@ -20,7 +21,8 @@ export function BWsettle() {
   return (
     <Card>
       <FlexBoxCol>
-        <h3>BusyWhale - Custody (Deposit/Withdrawal)</h3>
+        <img src={BWlogoDev} alt="img" width="160" height="48" />
+        <h3>Custody (Deposit/Withdrawal)</h3>
         <FlexBoxRow>
           <table>
             <tr><td><b>Coin:</b></td><td><b>JET1</b></td></tr>
