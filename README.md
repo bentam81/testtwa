@@ -54,7 +54,7 @@
 
 # Smart Contract Integration
 * change test Smart Contract address in:
-    * `src/hook/useCounterContract.ts`: `testSmartContractAddress`
+    * `src/hook/BWcontract.ts`: `BwAddr`
 * Smart Contract definition/interface
     * NO ABI in TON
     * https://ton-community.github.io/tutorials/02-contract/
@@ -62,4 +62,6 @@
         * "Anyone who wants to access the contract from TypeScript would simply use this interface class. This is excellent for separation of responsibilities within your team. The developer of the contract can provide this class to the developer of the client to abstract away implementation details such as how messages should be encoded in the binary level."
     * https://github.com/toncenter/tonweb/tree/master/src/contract
         * "ABI and json interface of contract not yet invented in TON"
-    * e.g. `src/contract/counter.ts`: `sendIncrement()`
+    * e.g. 
+        * `src/bw_ts/bwSettle.ts`: `sendUserWithdrawal()`
+        * `src/bw_ts/bwUserJettonAccount.ts`: `getJettonBalance()`
