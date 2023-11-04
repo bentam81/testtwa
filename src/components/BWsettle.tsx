@@ -21,7 +21,7 @@ export function BWsettle() {
   return (
     <Card>
       <FlexBoxCol>
-        <img src={BWlogoDev} alt="img" width="160" height="48" />
+        <img src={BWlogoDev} alt="BusyWhale" width="160" height="48" />
         <h3>Custody (Deposit/Withdrawal)</h3>
         <FlexBoxRow>
           <table>
