@@ -20,7 +20,7 @@ export function BWsettle() {
   return (
     <Card>
       <FlexBoxCol>
-        <h3>TEST BW Settle</h3>
+        <h3>BusyWhale - Custody (Deposit/Withdrawal)</h3>
         <FlexBoxRow>
           <table>
             <tr><td><b>Coin:</b></td><td><b>JET1</b></td></tr>

@@ -46,9 +46,9 @@ function App() {
             </Button>
           </FlexBoxRow>
           <BWsettle />
-          <Counter />
-          <TransferJetton />
-          <TransferTon />
+          {/* <Counter /> */}
+          {/* <TransferJetton /> */}
+          {/* <TransferTon /> */}
           <Jetton />
         </FlexBoxCol>
       </AppContainer>
