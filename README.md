@@ -1,4 +1,4 @@
-# testtwa
+# BusyWhale TON TWA
 * based on https://ton-community.github.io/tutorials/02-contract/
 * from https://github.com/ton-community/twa-template
 
