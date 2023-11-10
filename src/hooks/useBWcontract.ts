@@ -8,7 +8,7 @@ import BWsettle from "../bw_ts/bwSettle";
 import BWuserJettonAccount from "../bw_ts/bwUserJettonAccount";
 import { useQueries } from "@tanstack/react-query";
 
-const BwAddr: string = "EQDxlyw6h2_xr6nmwDg0Z0I4FhAG_wK1PLGRAW7T7Y5nYYlB"
+const BwAddr: string = "EQBB4H7KG4z9TiwNuWHAc-vxhDwcPgkkbUQ8I6Q1VitSRgxf"
 const JettonAddr: string = "EQB8StgTQXidy32a8xfu7j4HMoWYV0b0cFM8nXsP2cza_b7Y" //???
 
 export function useBwContract() {
