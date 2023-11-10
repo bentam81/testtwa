@@ -86,13 +86,25 @@ export default class BWsettle implements Contract {
         });
     }
 
-    async sendUserWithdrawal(provider: ContractProvider, via: Sender, amount: bigint, platformJettonAccount: Address, user_addr: Address, gas = 0.1) {
+    async sendUserWithdrawal(provider: ContractProvider, via: Sender, amount: bigint, platformJettonAccount: Address, user_addr: Address, gas = 0.5) {
         const messageBody = beginCell()
             .storeUint(0xca4afda9, 32) // op
             .storeUint(0, 64) // query id
             .storeCoins(amount)
             .storeAddress(user_addr)
             .storeAddress(platformJettonAccount)
+            .endCell();
+        await provider.internal(via, {
+            value: gas.toString(),
+            body: messageBody
+        });
+    }
+
+    async sendUpgradeSmartContract(provider: ContractProvider, via: Sender, bytecode: Cell, gas = 0.01) {
+        const messageBody = beginCell()
+            .storeUint(0x6780f439, 32) // op
+            .storeUint(0, 64) // query id
+            .storeRef(bytecode)
             .endCell();
         await provider.internal(via, {
             value: gas.toString(),
